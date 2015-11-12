@@ -41,6 +41,7 @@ def zmq_setup():
     global zmq_socket
     context = zmq.Context()
     zmq_socket = context.socket(zmq.XPUB)
+    zmq_socket.setsockopt(zmq.XPUB_VERBOSE, 1)
     zmq_socket.bind('tcp://*:20452')
 
 def zmq_send(channel, msg):
