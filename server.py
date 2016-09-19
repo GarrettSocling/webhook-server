@@ -7,6 +7,22 @@ from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
 httpd = None
 
 class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        channel_name = self.path[1:]
+
+        if channel_name == '':
+            self.send_response(302)
+            self.send_header('Location', 'https://tingbot-python.readthedocs.io/en/latest/webhooks.html')
+            return
+
+        html = html_template().format(
+            channel=channel_name,
+            channel_value=db_get(channel_name))
+
+        self.send_response(200)
+        self.end_headers()
+        self.request.sendall(html)
+
     def do_POST(self):
         channel_name = self.path[1:]
 
@@ -32,6 +48,19 @@ def http_setup():
 
 def http_loop():
     httpd.handle_request()
+
+_html_template = None
+
+def html_template():
+    global _html_template
+
+    _html_template = None # TODO: remove
+
+    if _html_template is None:
+        with open('get.html') as f:
+            _html_template = f.read()
+
+    return _html_template
 
 # ZMQ #
 

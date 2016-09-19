@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Webhook channel {channel}</title>
+    <link href="http://fonts.googleapis.com/css?family=Oxygen:400,300,700" rel="stylesheet" type="text/css">
+    <style>
+        html, body {{
+            font-family: 'Oxygen', sans-serif;
+        }}
+        .page {{
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }}
+        pre {{
+            border: 1px solid #bbb;
+            background-color: #eee;
+            padding: 3px 6px;
+        }}
+        code {{
+            font-size: 130%;
+            color: #880000;
+        }}
+    </style>
+</head>
+<body>
+    <div class="page">
+        <h1>Tingbot webhook channel <code>{channel}</code></h1>
+
+        <p>
+            This is the webhook channel <code>{channel}</code>. You can POST to this URL to change the value, and subscribe to updates on <a href="http://tingbot.com">Tingbot</a> using the @webhook decorator.
+        </p>
+
+        <h3>Current value</h3>
+        <pre>{channel_value}</pre>
+
+        <h3>Example code</h3>
+        <pre>import tingbot
+from tingbot import *
+
+screen.fill(color='black')
+screen.text('Waiting...')
+
+@webhook('{channel}')
+def on_webhook(data):
+    screen.fill(color='black')
+    screen.text(data, font_size=15, color='blue')
+
+tingbot.run()
+        </pre>
+
+        <p>For more information, see the <a href="https://tingbot-python.readthedocs.io/en/latest/webhooks.html">webhooks section</a> of the Tingbot documentation</p>
+    </div>
+</body>
+</html>
