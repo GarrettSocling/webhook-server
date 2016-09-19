@@ -11,7 +11,7 @@ class Handler(BaseHTTPRequestHandler):
         channel_name = self.path[1:]
 
         content_length = int(self.headers['Content-Length'])
-        if content_length == 0 or content_length > 1024:
+        if content_length > 1024:
             self.send_error(413)
             return
 
